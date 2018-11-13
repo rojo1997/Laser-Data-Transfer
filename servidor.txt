@@ -12,4 +12,4 @@ int main () {
 			delay(500);
 		}
 	}
-}
+}lwhgq`kregbkwèrgjbqe`krj
