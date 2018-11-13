@@ -1,0 +1,15 @@
+#include<ArduTIC.h>
+
+int main () {
+	char cad[50}
+	Serial.begin(9600);
+	while (1) {
+		if (serial.available()) {
+			serial.readString(cad);
+			serial.println(cad);
+		}
+		else {
+			delay(500);
+		}
+	}
+}
