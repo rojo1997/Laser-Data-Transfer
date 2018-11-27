@@ -15,6 +15,9 @@ using namespace std ;
 
 const int NUM_SYM = 32 ;
 
+
+
+
 unordered_map<char,double> getProb(string archivo){
   unordered_map<char,double> prob(NUM_SYM) ;
 
@@ -34,31 +37,35 @@ unordered_map<char,double> getProb(string archivo){
 class Node {
   private:
     char symbol ;
+    int left ;
+    int right ;
+    int dad ;
     double freq ;
-    unsigned int pos ;
 
   public:
-    Node (char s, double f, unsigned int p) {
+    Node (char s, int l, int r, int d, double f) {
       symbol = s ;
+      left = l ;
+      right = r ;
+      dad = d ;
       freq = f ;
-      pos = p ;
     }
     Node (void) {}
-    double getFreq (void) const {return (this->freq);}
-    bool operator< (const Node & a) const {return (this->freq < a.freq);}
+    double getFreq (void) const {return (this->freq) ;}
+    bool operator< (const Node & a) const {return (this->freq < a.freq) ;}
     bool operator== (const Node & a) const {
-      if (this->symbol != a.symbol) return (false);
-      if (this->freq != a.freq) return (false);
-      if (this->pos != a.pos) return (false);
+      if (this->symbol != a.symbol) return (false) ;
+      if (this->freq != a.freq) return (false) ;
+      if (this->pos != a.pos) return (false) ;
       return (true);
     }
     Node & operator= (const Node & a) {
-      this->symbol = a.symbol;
-      this->freq = a.freq;
-      this->pos = a.pos;
-      return (*this);
+      this->symbol = a.symbol ;
+      this->freq = a.freq ;
+      this->pos = a.pos ;
+      return (*this) ;
     }
-};
+} ;
 
 int main(){
   string file = "data/quijote.txt" ;
@@ -69,10 +76,7 @@ int main(){
   set<Node> order_prob ;
   for (auto it : prob) order_prob.insert(Node(it.first,it.second,1)) ;
 
-  cout << order_prob.size() << endl ;
-
-  for (int i = 0 ; i < prob.size() ; i++) {
-    cout << order_prob.begin()->getFreq() << endl ;
-    //prob.erase(order_prob.begin()) ;
+  for (auto it : order_prob) {
+    cout << it.getFreq() << endl ;
   }
 }
