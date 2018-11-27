@@ -35,22 +35,22 @@ class Node {
   private:
     char symbol ;
     double freq ;
-    int pos ;
+    unsigned int pos ;
 
   public:
-    Node (char s, double f, int p) {
+    Node (char s, double f, unsigned int p) {
       symbol = s ;
       freq = f ;
       pos = p ;
     }
-    Node(){}
-    double getFreq (void) const {return (freq);}
+    Node (void) {}
+    double getFreq (void) const {return (this->freq);}
     bool operator< (const Node & a) const {return (this->freq < a.freq);}
     bool operator== (const Node & a) const {
       if (this->symbol != a.symbol) return (false);
       if (this->freq != a.freq) return (false);
       if (this->pos != a.pos) return (false);
-      else return (true);
+      return (true);
     }
     Node & operator= (const Node & a) {
       this->symbol = a.symbol;
@@ -61,13 +61,15 @@ class Node {
 };
 
 int main(){
-  string file = "quijote.txt" ;
+  string file = "data/quijote.txt" ;
   unordered_map<char,double> prob = getProb(file) ;
   cout << "probabilidades:" << endl ;
   for (auto it : prob) cout << it.first << ": " << it.second << endl ;
 
   set<Node> order_prob ;
   for (auto it : prob) order_prob.insert(Node(it.first,it.second,1)) ;
+
+  cout << order_prob.size() << endl ;
 
   for (int i = 0 ; i < prob.size() ; i++) {
     cout << order_prob.begin()->getFreq() << endl ;
