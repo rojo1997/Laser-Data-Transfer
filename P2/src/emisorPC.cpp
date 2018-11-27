@@ -17,7 +17,6 @@ const int NUM_SYM = 32 ;
 
 
 
-
 unordered_map<char,double> getProb(string archivo){
   unordered_map<char,double> prob(NUM_SYM) ;
 
@@ -43,6 +42,13 @@ class Node {
     double freq ;
 
   public:
+    Node (char s, double f) {
+        symbol = s ;
+        freq = f ;
+        lelf = -1 ;
+        right = -1 ;
+        dad = -1 ;
+    }
     Node (char s, int l, int r, int d, double f) {
       symbol = s ;
       left = l ;
@@ -52,6 +58,9 @@ class Node {
     }
     Node (void) {}
     double getFreq (void) const {return (this->freq) ;}
+    int getLeftSon (void) const {return (this->left) ;}
+    int getRightSon (void) const {return (this->right) ;}
+    char getSymbol (void) const {return (this->symbol) ;}
     bool operator< (const Node & a) const {return (this->freq < a.freq) ;}
     bool operator== (const Node & a) const {
       if (this->symbol != a.symbol) return (false) ;
@@ -73,10 +82,31 @@ int main(){
   cout << "probabilidades:" << endl ;
   for (auto it : prob) cout << it.first << ": " << it.second << endl ;
 
+  // Ordenamos en funcion de la frecuencias
   set<Node> order_prob ;
-  for (auto it : prob) order_prob.insert(Node(it.first,it.second,1)) ;
+  for (auto it : prob) order_prob.insert(Node(it.first,it.second)) ;
 
   for (auto it : order_prob) {
     cout << it.getFreq() << endl ;
+  }
+}
+
+class Codigo {
+  private:
+    vector<Node> matrix ;
+
+  public:
+    Codigo (set<Node> freq) {
+      for (auto it : freg) matrix.pushback(it) ;
+    }
+} ;
+
+Codigo Huffman (set<Node> frecuencias) {
+  //Codigo micodigo () ;
+
+  while (frecuencias.size() != 1) {
+    Node min1 = frecuencias.begin() ;
+    Node min2 = frecuencias.begin()++ ;
+
   }
 }
