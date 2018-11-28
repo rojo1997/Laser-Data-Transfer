@@ -17,11 +17,11 @@ class Node {
     Node (void) {}
 
     Node (char s, double f) {
-        symbol = s ;
-        freq = f ;
-        left = -1 ;
-        right = -1 ;
-        dad = -1 ;
+      symbol = s ;
+      freq = f ;
+      left = -1 ;
+      right = -1 ;
+      dad = -1 ;
     }
     Node (char s, int l, int r, int d, double f) {
       symbol = s ;
