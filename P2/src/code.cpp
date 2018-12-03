@@ -9,8 +9,17 @@ Code::Code (set<Node> freq) {
 
 void Code::add (Node node) {matrix.push_back(node) ;}
 
-string Code::des (string cad) {return (cad) ;}
-string Code::cod (string cad) {return (cad) ;}
+string Code::des (string cad) {
+
+    return (cad) ;
+}
+string Code::cod (string cad) {
+    //Bit
+    for (int i = 0 ; i < cad.length() ; i++) {
+        unsigned char value = cad[i] ;
+    }
+    return (cad) ;
+}
 
 unsigned int Code::find (Node & node) const {
     for (unsigned int i = 0 ; i < matrix.size(); i++) {

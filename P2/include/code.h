@@ -14,6 +14,7 @@
 #include <set>
 #include <vector>
 
+#include "bit.h"
 #include "node.h"
 #include "code.h"
 

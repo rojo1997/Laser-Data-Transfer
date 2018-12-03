@@ -16,17 +16,20 @@ all: clean emisorPC
 
 OBJECTS: code.o node.o 
 
-emisorPC: node.o code.o emisorPC.o
+emisorPC: node.o code.o bit.o emisorPC.o
 	g++ -o $(BIN)/emisorPC $(OBJ)/emisorPC.o $(OBJ)/node.o $(OBJ)/code.o $(OPT)
 
 emisorPC.o: $(SRC)/emisorPC.cpp $(INCLUDE)/code.h
 	g++ -c -o $(OBJ)/emisorPC.o $(SRC)/emisorPC.cpp -I$(INCLUDE) $(OPT)
 
-code.o: $(SRC)/code.cpp $(INCLUDE)/code.h $(INCLUDE)/node.h
+code.o: $(SRC)/code.cpp $(INCLUDE)/code.h $(INCLUDE)/node.h $(INCLUDE)/bit.h
 	g++ -c -o $(OBJ)/code.o $(SRC)/code.cpp -I$(INCLUDE) $(OPT)
 
 node.o: $(SRC)/node.cpp $(INCLUDE)/node.h
 	g++ -c -o $(OBJ)/node.o $(SRC)/node.cpp -I$(INCLUDE) $(OPT)
+
+bit.o: $(SRC)/bit.cpp $(INCLUDE)/bit.h
+	g++ -c -o $(OBJ)/bit.o $(SRC)/bit.cpp -I$(INCLUDE) $(OPT)
 
 clean:
 	rm -rf $(OBJ)/*
