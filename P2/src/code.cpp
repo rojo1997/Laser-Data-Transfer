@@ -14,9 +14,11 @@ string Code::des (string cad) {
     return (cad) ;
 }
 string Code::cod (string cad) {
-    Bit (5 * cad.length()) ;
+    //Bits decode (cad.c_str(), cad.length() * 8) ;
+    //Bits (5 * cad.length()) ;
     for (int i = 0 ; i < cad.length() ; i++) {
         unsigned char value = cad[i] ;
+
     }
     return (cad) ;
 }
