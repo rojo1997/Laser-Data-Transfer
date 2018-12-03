@@ -1,4 +1,5 @@
 #include "code.h"
+#include "node.h"
 
 Code::Code (void) {}
 

@@ -12,15 +12,12 @@ BIN=bin
 # Opciones del compilador
 OPT=-O2 -std=c++17
 
-# Objetos a compilar
-
-
-all: clean node.o code.o emisorPC.o emisorPC
+all: clean emisorPC
 
 OBJECTS: code.o node.o 
 
-emisorPC: emisorPC.o
-	g++ -o $(BIN)/emisorPC $(OBJ)/emisorPC.o $(OPT)
+emisorPC: node.o code.o emisorPC.o
+	g++ -o $(BIN)/emisorPC $(OBJ)/emisorPC.o $(OBJ)/node.o $(OBJ)/code.o $(OPT)
 
 emisorPC.o: $(SRC)/emisorPC.cpp $(INCLUDE)/code.h
 	g++ -c -o $(OBJ)/emisorPC.o $(SRC)/emisorPC.cpp -I$(INCLUDE) $(OPT)
