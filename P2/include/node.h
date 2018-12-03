@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "node.h"
+
 using namespace std ;
 
 class Node {
@@ -14,63 +16,39 @@ class Node {
     double freq ;
 
   public:
-    Node (void) {}
+    Node (void) ;
 
-    Node (char s, double f) {
-      symbol = s ;
-      freq = f ;
-      left = -1 ;
-      right = -1 ;
-      dad = -1 ;
-    }
-    Node (char s, int l, int r, int d, double f) {
-      symbol = s ;
-      left = l ;
-      right = r ;
-      dad = d ;
-      freq = f ;
-    }
+    Node (char, double) ;
 
-    double getFreq (void) const {return (this->freq) ;}
+    Node (char, int, int, int, double) ;
 
-    int getLeftSon (void) const {return (this->left) ;}
+    double getFreq (void) const ;
 
-    int getRightSon (void) const {return (this->right) ;}
+    int getLeftSon (void) const ;
 
-    int getDad (void) const {return (this->dad) ;}
+    int getRightSon (void) const ;
 
-    char getSymbol (void) const {return (this->symbol) ;}
+    int getDad (void) const ;
 
-    void setFreq (double f) {freq = f ;}
+    char getSymbol (void) const ;
 
-    void setLeftSon (int l) {left = l ;}
+    void setFreq (double) ;
 
-    void setRightSon (int r) {right = r ;}
+    void setLeftSon (int) ;
 
-    void setDad (int d) {dad = d ;}
+    void setRightSon (int) ;
 
-    void setSymbol (char s) {symbol = s ;}
+    void setDad (int) ;
 
-    void print (void) const {
-      cout << "[" << symbol << "\t:" << freq << "\t," << left << "\t," << right << "\t," << dad << "]" << endl ;
-    }
+    void setSymbol (char) ;
 
-    bool operator< (const Node & a) const {return (this->freq < a.freq) ;}
+    void print (void) const ;
 
-    bool operator== (const Node & a) const {
-      if (this->symbol != a.symbol) return (false) ;
-      if (this->freq != a.freq) return (false) ;
-      return (true);
-    }
+    bool operator< (const Node &) const ;
 
-    Node & operator= (const Node & a) {
-      this->symbol = a.symbol ;
-      this->freq = a.freq ;
-      this->left = a.left ;
-      this->right = a.right ;
-      this->dad = a.dad ;
-      return (*this) ;
-    }
+    bool operator== (const Node &) const ;
+
+    Node & operator= (const Node &) ;
 } ;
 
 #endif

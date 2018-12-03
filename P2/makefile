@@ -1,26 +1,35 @@
 escritorPORT=/dev/ttyACM0
 lectorPORT=/dev/ttyACM1
 INCLUDES=-I./include -I./lib
+
+# Directorios
 INCLUDE=include
 LIB=lib
 OBJ=obj
 SRC=src
 BIN=bin
+
+# Opciones del compilador
 OPT=-O2 -std=c++17
 
-all: clean emisorPC
+# Objetos a compilar
 
-emisorPC: $(OBJ)/emisorPC.o $(OBJ)/code.o
-	g++ -o $(BIN)/emisorPC $(OBJ)/emisorPC.o $(OBJ)/code.o $(OPT)
 
-$(OBJ)/emisorPC.o: $(SRC)/emisorPC.cpp $(INCLUDE)/code.h
+all: clean node.o code.o emisorPC.o emisorPC
+
+OBJECTS: code.o node.o 
+
+emisorPC: emisorPC.o
+	g++ -o $(BIN)/emisorPC $(OBJ)/emisorPC.o $(OPT)
+
+emisorPC.o: $(SRC)/emisorPC.cpp $(INCLUDE)/code.h
 	g++ -c -o $(OBJ)/emisorPC.o $(SRC)/emisorPC.cpp -I$(INCLUDE) $(OPT)
 
-$(OBJ)/code.o: $(SRC)/code.cpp $(INCLUDE)/node.h
+code.o: $(SRC)/code.cpp $(INCLUDE)/code.h $(INCLUDE)/node.h
 	g++ -c -o $(OBJ)/code.o $(SRC)/code.cpp -I$(INCLUDE) $(OPT)
 
-$(OBJ)/node.o: $(SRC)/node.cpp
-	g++ -c -o $(OBJ)/node.o $(SRC)/node.cpp $(OPT)
+node.o: $(SRC)/node.cpp $(INCLUDE)/node.h
+	g++ -c -o $(OBJ)/node.o $(SRC)/node.cpp -I$(INCLUDE) $(OPT)
 
 clean:
 	rm -rf $(OBJ)/*

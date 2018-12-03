@@ -1,51 +1,54 @@
 #ifndef CODE
 #define CODE
 
+#include <cmath>
 #include <iostream>
-#include <vector>
-#include <set>
+#include <cstdio>
+#include <cstdlib>
 #include <string>
+#include <unordered_map>
+#include <string>
+#include <cstring>
+#include <fstream>
+#include <algorithm>
+#include <set>
+#include <vector>
 
 #include "node.h"
+#include "code.h"
 
 using namespace std ;
 
 class Code {
   private:
+    // Arbol de codificacion y decodificacion
     vector<Node> matrix ;
 
+    // Metodos auxiliares
+    set<Node> getProb (string, unsigned int) ;
+
   public:
-    Code (void) {}
+    // Constructores
+    Code (void) ;
+    Code (set<Node>) ;
 
-    Code (set<Node> freq) {
-      for (auto it : freq) matrix.push_back(it) ;
-    }
+    // Operadores sobre nodos
+    void add (Node) ;
+    unsigned int find (Node &) const ;
+    unsigned int size (void) const ;
 
-    void add (Node node) {matrix.push_back(node) ;}
+    // Codificadores y descodificadores
+    string des (string cad) ;
+    string cod (string cad) ;
 
-    string des (string cad) {return (cad) ;}
-    string cod (string cad) {return (cad) ;}
+    // Sobrecarga de operadores
+    Node & operator[] (Node & node) ;
+    Node operator[] (unsigned int i) const ;
+    Code & operator= (const Code &) ;
 
-    unsigned int find (Node & node) const {
-      for (unsigned int i = 0 ; i < matrix.size(); i++) {
-        if (node == matrix[i]) return (i) ;
-      }
-    }
-
-    unsigned int size (void) {return (matrix.size()) ;}
-
-    Node & operator[] (Node & node) {
-      return (matrix[find(node)]) ;
-    }
-
-    Node operator[] (unsigned int i) const {
-      return (matrix[i]) ;
-    }
-
-    Code & operator= (const Code & a) {
-      this->matrix = a.matrix ;
-      return (*this) ;
-    }
+    // Algoritmos de codificación
+    void huffman (string, unsigned int n_symbols = 32) ;
+    void huffman (set<Node>) ;
 } ;
 
 #endif
