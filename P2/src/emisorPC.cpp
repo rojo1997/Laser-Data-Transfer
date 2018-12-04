@@ -24,7 +24,7 @@ int main (void) {
   Bits origin (original, 4 * 8) ;
 
   Bits codificada = mycode.cod (origin) ;
-  cout << endl << endl << "codificada: " ; codificada.print() ;
+  //cout << endl << endl << "codificada: " ; codificada.print() ;
   /*string descodifica = mycode.des (codificada) ;
 
   cout << "Original: " << original << endl ;

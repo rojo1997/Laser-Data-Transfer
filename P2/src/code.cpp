@@ -26,20 +26,15 @@ string Code::des (Bits b) const {
 Bits Code::cod (Bits decode) const {
     // Cadena para guardar bits de salida
     Bits code ((decode.length() / 8) * 5) ;
-    cout << "code: " ;
-    code.print() ;
-    cout << "\ndecode: " ;
-    decode.print() ;
-    cout << endl ;
     // String de salida
     string out ;
     for (unsigned int i = 0 ; i < decode.length()/8 ; i++) {
         unsigned char value = decode.getarray()[i] ;
         cout << value << endl ;
         code += getCode (value) ;
-        cout << "code:" ;
+        /*cout << "code:" ;
         getCode (value).print() ;
-        cout << endl ;
+        cout << endl ;*/
     }
     return (code) ;
 }
@@ -82,14 +77,14 @@ en funcion de la matrix
 */
 Bits Code::getCode (char a) const {
     // Cadena de bits de salida
-    Bits out (0) ;
+    Bits out ;
     // Buscamos el nodo hoja con la letra a
     Node son = findMe ((a)) ; int i = 0 ;
     // Recorremos el arbol de forma ascendente
-    while (!son.root()) {
-        out.insert(out.length() - i - 1, direction(findDad (son), son)) ;
+    /*do {
+        //out.insert(out.length() - i - 1, direction(findDad (son), son)) ;
         i++ ; son = findDad (son) ;
-    }
+    } while (!son.root()) ;*/
     return (out);
 }
 

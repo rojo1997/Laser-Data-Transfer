@@ -2,35 +2,45 @@
 
 Bits::Bits (void) {}
 
-Bits::Bits (int i) {
-
+Bits::Bits (unsigned int i) {
+    // Reserva de memoria con el \0
     if (i % 8 != 0) {
-        
+        max = i ;
         array = new unsigned char [i/8 + 1] ;
 
     } else {
-        
+        max = ceil (i / 8.0) * 8 ;
         array = new unsigned char [i/8] ;
     }
-
+    // Parte ocupada del vector
     size = i ;
-
+    // Inicializar a 0
     for (int i = 0 ; i < ceil (size / 8.0) ; i++) {
-
         array[i] = 0 ;
     }
 }
 
 Bits::Bits (unsigned char * a, int b) {
-
     array = a ;
     size = b ;
+    // Multiplo de 8 superior
+    max = ceil (size / 8.0) * 8 ;
 }
 
-void Bits::insert (int a, unsigned char value) {
-
+void Bits::insert (unsigned int a, unsigned char value) {
+    // Si no hay espacio en el array
+    if (a >= max) Bits::resize (a) ;
+    else size++ ;
     int i = a / 8 ; int j = a % 8 ;
     array[i] |= (value << j) ;
+}
+
+void Bits::resize (unsigned int i) {
+    Bits aux (i) ;
+    for (unsigned int j = 0 ; j < length() ; j++) {
+        aux.insert (j, get(j)) ;
+    }
+    (*this) = aux ;
 }
 
 unsigned char Bits::get (int a) const {
@@ -49,11 +59,11 @@ unsigned char * Bits::getarray (void) {
 }
 
 Bits Bits::operator+ (Bits b) const {
-    Bits out (length() + b.length()) ;
-    for (unsigned int i = 0 ; i < length() ; i++) {
+    Bits out (max + b.max) ;
+    for (unsigned int i = 0 ; i < size ; i++) {
         out.insert(i, get(i)) ;
     }
-    for (unsigned int i = length(), j = 0 ; i < out.length() ; i++, j++) {
+    for (unsigned int i = size, j = 0 ; i < out.size ; i++, j++) {
         out.insert(i, b.get(j)) ;
     }
     return (out) ;
@@ -61,6 +71,16 @@ Bits Bits::operator+ (Bits b) const {
 
 Bits Bits::operator+= (Bits b) {
     return ((*this) + b) ;
+}
+
+Bits & Bits::operator= (const Bits & b) {
+    if (this != &b) {
+        this->size = b.size ;
+        this->max = b.max ;
+        array = new unsigned char [max/8] ;
+        for (unsigned int i = 0 ; i < size ; i++) array[i] = b.array[i] ;
+    }
+    return (*this) ;
 }
 
 string Bits::ToString (void) const {
