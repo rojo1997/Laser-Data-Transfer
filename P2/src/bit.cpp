@@ -51,12 +51,12 @@ unsigned char * Bits::getarray (void) {
 
 int codifica (string cadena, unsigned char * array) {
 
-    const int NUM_BITS = cadena.length() * 5 ;
-    const int NUM_BYTES = ceil (NUM_BITS / 8.0) ;
+    const unsigned int NUM_BITS = cadena.length() * 5 ;
+    const unsigned int NUM_BYTES = ceil (NUM_BITS / 8.0) ;
     // Creamos el array de bits del tamaño definido por la app biyectiva
     Bits str (cadena.length() * 5.0) ;
     // Iteramos sobre los caracteres leidos
-    for (int i = 0, k = 0; i < cadena.length() ; i++) {
+    for (unsigned int i = 0, k = 0; i < cadena.length() ; i++) {
     
         unsigned char letra = ((unsigned char) cadena[i]) ;
         if (letra == ' ') letra = 26 ;
@@ -70,8 +70,8 @@ int codifica (string cadena, unsigned char * array) {
             str.insert(k, (letra & (1 << j)) >> j) ;
         }
     }
-    for (int i = NUM_BITS ; i < NUM_BYTES * 8 ; i++) str.insert(i, 0) ;
-    for (int i = 0 ; i < NUM_BYTES ; i++) array[i] = str.getarray()[i] ;
+    for (unsigned int i = NUM_BITS ; i < NUM_BYTES * 8 ; i++) str.insert(i, 0) ;
+    for (unsigned int i = 0 ; i < NUM_BYTES ; i++) array[i] = str.getarray()[i] ;
     array[NUM_BYTES] = '\0' ;
     // Devolvemos el numero de bits
     return (NUM_BITS) ;
@@ -79,9 +79,9 @@ int codifica (string cadena, unsigned char * array) {
 
 string descodifica (unsigned char * array, int size) {
 
-    const int NUM_BITS = size ;
+    // const int NUM_BITS = size ;
     const int NUM_WORDS = size / 5 ;
-    const int NUM_BYTES = ceil (size / 8.0) ;
+    // const int NUM_BYTES = ceil (size / 8.0) ;
     // Creamos el array de bits para extraer datos
     Bits str (array, size) ;
     string cadena ;
@@ -110,7 +110,7 @@ void printstr8 (unsigned char * cad, int size) {
 
 void printstr5 (string cad) {
 
-    for (int i = 0 ; i < cad.length() ; i++) {
+    for (unsigned int i = 0 ; i < cad.length() ; i++) {
 
         cout << +((unsigned char) cad[i]) - 65 << " " ;
     }
@@ -119,7 +119,7 @@ void printstr5 (string cad) {
 
 void print_string (string cad) {
 
-    for (int i = 0 ; i < cad.length() ; i++) {
+    for (unsigned int i = 0 ; i < cad.length() ; i++) {
 
         cout << +((unsigned char) cad[i]) << " " ;
     }

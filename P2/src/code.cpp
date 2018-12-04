@@ -14,19 +14,21 @@ string Code::des (string cad) {
     return (cad) ;
 }
 string Code::cod (string cad) {
-    //Bits decode (cad.c_str(), cad.length() * 8) ;
-    //Bits (5 * cad.length()) ;
-    for (int i = 0 ; i < cad.length() ; i++) {
-        unsigned char value = cad[i] ;
+    Bits decode (unsigned char [], cad.length() * 8) ;
+    Bits code (5 * cad.length()) ;
+    for (unsigned int i = 0 ; i < cad.length() ; i++) {
+        char value = cad[i] ;
 
     }
     return (cad) ;
 }
 
-unsigned int Code::find (Node & node) const {
-    for (unsigned int i = 0 ; i < matrix.size(); i++) {
-    if (node == matrix[i]) return (i) ;
-    }
+unsigned int Code::find (const Node & node) const {
+    /*for (unsigned int i = 0 ; i < matrix.size(); i++) {
+        if (node == matrix[i]) return (i) ;
+    }*/
+    auto it = std::find(matrix.cbegin(), matrix.cend(), node) ;
+    return (distance(matrix.cbegin(), it)) ;
 }
 
 unsigned int Code::size (void) const {return (matrix.size()) ;}

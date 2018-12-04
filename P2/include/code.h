@@ -35,7 +35,7 @@ class Code {
 
     // Operadores sobre nodos
     void add (Node) ;
-    unsigned int find (Node &) const ;
+    unsigned int find (const Node &) const ;
     unsigned int size (void) const ;
 
     // Codificadores y descodificadores
