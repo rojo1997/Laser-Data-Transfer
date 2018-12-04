@@ -33,20 +33,50 @@ void Bits::insert (int a, unsigned char value) {
     array[i] |= (value << j) ;
 }
 
-unsigned char Bits::get (int a) {
+unsigned char Bits::get (int a) const {
 
     int i = a / 8 ; int j = a % 8 ;
     return ((array[i]) & (1 << j)) >> j ;
 }
 
-int Bits::length (void) {
-
+unsigned int Bits::length (void) const {
     return (size) ;
 }
 
 unsigned char * Bits::getarray (void) {
 
     return (array) ;
+}
+
+Bits Bits::operator+ (Bits b) const {
+    Bits out (length() + b.length()) ;
+    for (unsigned int i = 0 ; i < length() ; i++) {
+        out.insert(i, get(i)) ;
+    }
+    for (unsigned int i = length(), j = 0 ; i < out.length() ; i++, j++) {
+        out.insert(i, b.get(j)) ;
+    }
+    return (out) ;
+}
+
+Bits Bits::operator+= (Bits b) {
+    return ((*this) + b) ;
+}
+
+string Bits::ToString (void) const {
+    string out ;
+    if (!(length() % 8)) return ("Error") ;
+    for(unsigned int i = 0; i < (length()/8) ; i++) {
+        out += array[i] ;
+    }
+    return (out) ;
+}
+
+void Bits::print (void) const {
+    for (unsigned int i = 0 ; i < length() ; i++) {
+        if (get(i) == 0) cout << "0" ;
+        else cout << "1" ;
+    }
 }
 
 int codifica (string cadena, unsigned char * array) {

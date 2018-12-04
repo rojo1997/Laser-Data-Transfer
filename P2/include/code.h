@@ -36,11 +36,18 @@ class Code {
     // Operadores sobre nodos
     void add (Node) ;
     unsigned int find (const Node &) const ;
+    Node findDad (const Node &) const ;
+    Node findLeftSon (const Node &) const ;
+    Node findRightSon (const Node &) const ;
+    Node findMe (char s) const ;
+    bool direction (const Node &, const Node &) const ;
+    Bits getCode (char) const ;
+    char getDeco (Bits) const ;
     unsigned int size (void) const ;
 
     // Codificadores y descodificadores
-    string des (string cad) ;
-    string cod (string cad) ;
+    string des (Bits) const ;
+    Bits cod (Bits) const ;
 
     // Sobrecarga de operadores
     Node & operator[] (Node & node) ;
@@ -50,6 +57,9 @@ class Code {
     // Algoritmos de codificación
     void huffman (string, unsigned int n_symbols = 32) ;
     void huffman (set<Node>) ;
+
+    // Print
+    void print (void) ;
 } ;
 
 #endif

@@ -1,3 +1,4 @@
+#include "bit.h"
 #include "code.h"
 #include "node.h"
 
@@ -9,18 +10,38 @@ Code::Code (set<Node> freq) {
 
 void Code::add (Node node) {matrix.push_back(node) ;}
 
-string Code::des (string cad) {
-
-    return (cad) ;
-}
-string Code::cod (string cad) {
-    Bits decode (unsigned char [], cad.length() * 8) ;
-    Bits code (5 * cad.length()) ;
-    for (unsigned int i = 0 ; i < cad.length() ; i++) {
-        char value = cad[i] ;
-
+string Code::des (Bits b) const {
+    // Cadena codificada para pasarle cad
+    // Interface sobre un simbolo
+    Bits aux (5) ;
+    // Cadena de salida
+    string out = "" ;
+    // Devemos extraer cadenas de 5 bits
+    for (unsigned int i = 0 ; i < b.length() ; i++) {
+        if (i % 5) out += getDeco(aux) ;
+        aux.insert(i % 5, b.get(i)) ;
     }
-    return (cad) ;
+    return (out) ;
+}
+Bits Code::cod (Bits decode) const {
+    // Cadena para guardar bits de salida
+    Bits code ((decode.length() / 8) * 5) ;
+    cout << "code: " ;
+    code.print() ;
+    cout << "\ndecode: " ;
+    decode.print() ;
+    cout << endl ;
+    // String de salida
+    string out ;
+    for (unsigned int i = 0 ; i < decode.length()/8 ; i++) {
+        unsigned char value = decode.getarray()[i] ;
+        cout << value << endl ;
+        code += getCode (value) ;
+        cout << "code:" ;
+        getCode (value).print() ;
+        cout << endl ;
+    }
+    return (code) ;
 }
 
 unsigned int Code::find (const Node & node) const {
@@ -29,6 +50,58 @@ unsigned int Code::find (const Node & node) const {
     }*/
     auto it = std::find(matrix.cbegin(), matrix.cend(), node) ;
     return (distance(matrix.cbegin(), it)) ;
+}
+
+Node Code::findDad (const Node & node) const {
+    return (matrix[node.getDad()]) ;
+}
+
+Node Code::findLeftSon (const Node & node) const {
+    return (matrix[node.getLeftSon()]) ;
+}
+
+Node Code::findRightSon (const Node & node) const {
+    return (matrix[node.getRightSon()]) ;
+}
+
+Node Code::findMe (char s) const {
+    for (auto it : matrix)
+        if (it.getSymbol() == s) return (it) ;
+    return (*matrix.end()) ;
+}
+
+bool Code::direction (const Node & p, const Node & h) const {
+    Node aux = findRightSon(p);
+    if (aux == h) return (true) ;
+    else return (false) ;            
+}
+
+// Falta probarlo
+/* Funcion que recibe un caracter ascii y lo codifica
+en funcion de la matrix
+*/
+Bits Code::getCode (char a) const {
+    // Cadena de bits de salida
+    Bits out (0) ;
+    // Buscamos el nodo hoja con la letra a
+    Node son = findMe ((a)) ; int i = 0 ;
+    // Recorremos el arbol de forma ascendente
+    while (!son.root()) {
+        out.insert(out.length() - i - 1, direction(findDad (son), son)) ;
+        i++ ; son = findDad (son) ;
+    }
+    return (out);
+}
+
+// Falta probarlo
+char Code::getDeco (Bits b) const {
+    // Buscamos el nodo root
+    Node aux = findDad (Node ()) ;
+    for (unsigned int i = 0 ; i < b.length(); ++i) {
+        if (b.get(i) == 0) aux = findLeftSon(aux) ;         
+        else aux = findRightSon(aux) ;
+    }
+    return (aux.getSymbol()) ;     
 }
 
 unsigned int Code::size (void) const {return (matrix.size()) ;}
@@ -79,12 +152,18 @@ void Code::huffman (set<Node> frecuencias) {
     add (n3) ;
     frecuencias.insert (n3) ;
 
-    //this->[min1].setDad(find(n3)) ;
-    //this->[min2].setDad(find(n3)) ;
+    (*this)[min1].setDad(find(n3)) ;
+    (*this)[min2].setDad(find(n3)) ;
   }
-} ;
+}
 
 void Code::huffman (string file, unsigned int n_symbols) {
     huffman(getProb(file, n_symbols)) ;
 }
 
+void Code::print (void) {
+    int i = 0 ;for (auto it : matrix) {
+        cout << "[" << i++ << "]" ; 
+        it.print() ; cout << endl ;
+    }
+}

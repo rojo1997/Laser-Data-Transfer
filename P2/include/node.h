@@ -10,13 +10,15 @@ using namespace std ;
 class Node {
   private:
     char symbol ;
-    int left ;
-    int right ;
-    int dad ;
+    int left = -1 ;
+    int right = -1 ;
+    int dad = -1 ;
     double freq ;
 
   public:
     Node (void) ;
+
+    Node (char s) ;
 
     Node (char, double) ;
 
@@ -41,6 +43,10 @@ class Node {
     void setDad (int) ;
 
     void setSymbol (char) ;
+
+    bool leaf (void) const ;
+
+    bool root (void) const ;
 
     void print (void) const ;
 

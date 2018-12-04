@@ -18,9 +18,9 @@ all: clean emisorPC
 OBJECTS: code.o node.o 
 
 emisorPC: node.o code.o bit.o emisorPC.o
-	$(CC) -o $(BIN)/emisorPC $(OBJ)/emisorPC.o $(OBJ)/node.o $(OBJ)/code.o $(OPT)
+	$(CC) -o $(BIN)/emisorPC $(OBJ)/emisorPC.o $(OBJ)/node.o $(OBJ)/code.o $(OBJ)/bit.o $(OPT)
 
-emisorPC.o: $(SRC)/emisorPC.cpp $(INCLUDE)/code.h
+emisorPC.o: $(SRC)/emisorPC.cpp $(INCLUDE)/code.h $(INCLUDE)/bit.h
 	$(CC) -c -o $(OBJ)/emisorPC.o $(SRC)/emisorPC.cpp -I$(INCLUDE) $(OPT)
 
 code.o: $(SRC)/code.cpp $(INCLUDE)/code.h $(INCLUDE)/node.h $(INCLUDE)/bit.h

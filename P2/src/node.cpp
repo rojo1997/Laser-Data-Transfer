@@ -2,6 +2,10 @@
 
 Node::Node (void) {}
 
+Node::Node (char s) {
+    symbol = s ;
+}
+
 Node::Node (char s, double f) {
     symbol = s ;
     freq = f ;
@@ -39,6 +43,14 @@ void Node::setSymbol (char s) {symbol = s ;}
 
 void Node::print (void) const {
     cout << "[" << symbol << "\t:" << freq << "\t," << left << "\t," << right << "\t," << dad << "]" << endl ;
+}
+
+bool Node::leaf (void) const {
+    return ((left == -1) && (right == -1)) ;
+}
+
+bool Node::root (void) const {
+    return (dad == -1) ;
 }
 
 bool Node::operator< (const Node & a) const {return (this->freq < a.freq) ;}
